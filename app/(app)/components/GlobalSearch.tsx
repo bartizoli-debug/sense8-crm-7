@@ -139,7 +139,7 @@ function SectionHeader({ type }: { type: EntityType }) {
   );
 }
 
-async function safeQuery<T>(fn: () => Promise<{ data: T | null; error: any }>): Promise<T> {
+async function safeQuery<T>(fn: () => PromiseLike<{ data: T | null; error: any }>): Promise<T> {
   try {
     const { data, error } = await fn();
     if (error) return (null as any);
@@ -305,7 +305,7 @@ export default function GlobalSearch({
     }
 
     window.addEventListener('keydown', onKey, { capture: true });
-    return () => window.removeEventListener('keydown', onKey, { capture: true } as any);
+    return () => window.removeEventListener('keydown', onKey, { capture: true });
   }, [flat, active, router, onResultClick]);
 
   const anyResults = rows.length > 0;
